@@ -3,7 +3,9 @@
 Team Members:
 
 *Zain Rahman
+
 *Xavier Thomas-Lewis
+
 *Luis Robles
 
 For each iteration you should answer the following:
