@@ -2,8 +2,6 @@
 
 Team Members:
 
-*Zain Rahman
-
 *Xavier Thomas-Lewis
 
 *Luis Robles
