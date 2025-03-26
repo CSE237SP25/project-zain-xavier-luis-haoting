@@ -23,6 +23,7 @@ What user stories do you intend to complete next iteration?
 
 Is there anything that you implemented but doesn't currently work?
 * Code exists for creating new accounts and logging into existing accounts, but this is not yet included in the menu
+* Menu currently has a sanitization issue; any non-numerical inputs result in an input mismatch error
 
 What commands are needed to compile and run your code from the command line (please provide a script that users can run to launch your program)?
 * javac bankapp/*.java
