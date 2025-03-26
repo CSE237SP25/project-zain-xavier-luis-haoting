@@ -76,6 +76,13 @@ public class Menu {
 			selection = m.getUserInput();
 		}
         System.out.println("Exiting...");
-	}
+        m.close();  
+    }
+
+    public void close() {
+        if (keyboardInput != null) {
+            keyboardInput.close(); 
+        }
+    }
 
 }

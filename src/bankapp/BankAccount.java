@@ -22,7 +22,7 @@ public class BankAccount {
 		if(amount < 0) {
 			throw new IllegalArgumentException("Withdrawal amount must be positive.");
 		}
-		if (this.balance <= amount) {
+		if (this.balance < amount) {
 			System.out.println("Insufficient funds.");
 			throw new IllegalArgumentException("Insufficient funds.");
 		}
