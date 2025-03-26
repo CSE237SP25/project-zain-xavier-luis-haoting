@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class Menu {
 	
 	private BankAccount theAccount; 
+    private Scanner keyboardInput;  
 	
 	public Menu() {
 		theAccount = new BankAccount();
+        keyboardInput = new Scanner(System.in); 
 	}
 	
 	//display methods don't need to be tested
@@ -22,10 +24,8 @@ public class Menu {
 	
 	//methods that require user input (Scanner) don't need to be tested
 	public double getUserInput() {
-		try (Scanner keyboardInput = new Scanner(System.in)) {
-			double userInput = keyboardInput.nextDouble();
-			return userInput;
-		}
+			return keyboardInput.nextDouble();
+		
 	}
 	
 	//Can and should test methods the process user input
