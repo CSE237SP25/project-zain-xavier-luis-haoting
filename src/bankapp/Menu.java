@@ -22,9 +22,10 @@ public class Menu {
 	
 	//methods that require user input (Scanner) don't need to be tested
 	public double getUserInput() {
-		Scanner keyboardInput = new Scanner(System.in);
-		double userInput = keyboardInput.nextDouble();
-		return userInput;
+		try (Scanner keyboardInput = new Scanner(System.in)) {
+			double userInput = keyboardInput.nextDouble();
+			return userInput;
+		}
 	}
 	
 	//Can and should test methods the process user input
