@@ -22,6 +22,7 @@ public class MenuTests {
 		assertEquals(account.getCurrentBalance(), 25.0, 0.005);
 	}
 	
+	@Test
 	public void testUserWithdraw() {
 		// 1. Create object being tested
 		Menu m = new Menu();
