@@ -26,5 +26,9 @@ Is there anything that you implemented but doesn't currently work?
 * Menu currently has a sanitization issue; any non-numerical inputs result in an input mismatch error
 
 What commands are needed to compile and run your code from the command line (please provide a script that users can run to launch your program)?
-* javac bankapp/*.java
-* java bankapp.Menu
+
+* Navigate to the root of the repo, then run: 
+
+* chmod +x runBankApp.sh
+
+* ./runBankApp.sh
