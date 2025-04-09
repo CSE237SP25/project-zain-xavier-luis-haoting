@@ -6,12 +6,12 @@ import java.util.Scanner;
 public class Menu {
 
     private final Scanner keyboardInput;
-    private final Bank accounts;
+    private final Accounts accounts;
     private User currentUser;
 
     public Menu() {
         this.keyboardInput = new Scanner(System.in);
-        this.accounts = new Bank();
+        this.accounts = new Accounts();
     }
 
     public boolean handleLogin() {
@@ -131,7 +131,7 @@ public class Menu {
         }
     }
     
-    public Bank getAccounts() {
+    public Accounts getAccounts() {
         return accounts;
     }
 
