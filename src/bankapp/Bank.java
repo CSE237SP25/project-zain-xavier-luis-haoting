@@ -1,7 +1,10 @@
 package bankapp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.lang.System;
 import java.security.NoSuchAlgorithmException;
@@ -83,6 +86,21 @@ public class Bank implements Iterable<User>{
 	@Override
 	public Iterator<User> iterator() {
 		return this.users.values().iterator();
+	}
+	
+	/**
+	 * 
+	 * Provides the entire set of users only to administrators
+	 * 
+	 * @param user the user attempting to gain access to all accounts in the bank
+	 * @return a reference to the all the users in the bank; if not an administrator it returns null
+	 * 
+	 * */
+	public List<User> getAllUsersIfAdmin(User user) {
+	    if (user.isAdmin()) {
+	        return new ArrayList<>(users.values());
+	    }
+	    return null;
 	}
 
 }
