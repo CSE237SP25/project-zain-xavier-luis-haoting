@@ -170,5 +170,4 @@ public class AdminTests {
         assertTrue("Admin should get an empty list when there are no transactions", transactions.isEmpty());
     }
 
-
 }
