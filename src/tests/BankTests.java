@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -142,4 +144,29 @@ public class BankTests {
         boolean result = accounts.registerUser("new_user", "");
         assertFalse("User with an empty password should not be allowed", result);
     }
+    
+    /**
+     * Tests that the {@link Bank} class correctly implements {@link Iterable} and allows iteration over users.
+     * 
+     * Verifies that all registered users are returned when iterating over the Bank.
+     */
+    @Test
+    public void testBankIterable() {
+        // Register multiple users
+        accounts.registerUser("alice", "pass1");
+        accounts.registerUser("bob", "pass2");
+        accounts.registerUser("carol", "pass3");
+
+        // Store usernames from iteration
+        Set<String> iteratedUsernames = new HashSet<>();
+        for (User user : accounts) {
+            iteratedUsernames.add(user.getUsername());
+        }
+
+        // Expected usernames
+        Set<String> expectedUsernames = Set.of("alice", "bob", "carol");
+
+        assertEquals("All registered users should be returned via iteration", expectedUsernames, iteratedUsernames);
+    }
+
 }

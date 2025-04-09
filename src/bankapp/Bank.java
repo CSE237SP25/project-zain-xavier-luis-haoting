@@ -1,6 +1,7 @@
 package bankapp;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.lang.System;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * Manages user accounts in the banking application. Provides functionality for
  * user registration and authentication.
  */
-public class Bank {
+public class Bank implements Iterable<User>{
 	/**
 	 * A map storing registered users, where the key is the username and the value
 	 * is the User object.
@@ -72,6 +73,16 @@ public class Bank {
 			return null;
 		}
 		return user;
+	}
+
+	/**
+	 * Provides an iterator for the Bank class in which it iterates through each user in the hashmap.
+	 * @param none
+	 * @return The iterator given by the hashmap's values
+	 * */
+	@Override
+	public Iterator<User> iterator() {
+		return this.users.values().iterator();
 	}
 
 }
