@@ -2,38 +2,41 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import bankapp.BankAccount;
 import bankapp.Menu;
+import bankapp.User;
+import bankapp.BankAccount;
 
 public class MenuTests {
-	
-	@Test
-	public void testUserDeposit() {
-		// 1. Create object being tested
-		Menu m = new Menu();
-		
-		//2. Call method being tested
-		m.processUserInput(1, 25);
-		
-		//3. Use assertions to verify correctness
-		BankAccount account = m.getAccount();
-		assertEquals(account.getCurrentBalance(), 25.0, 0.005);
-	}
-	
-	@Test
-	public void testUserWithdraw() {
-		// 1. Create object being tested
-		Menu m = new Menu();
-		
-		//2. Call method being tested
-		m.processUserInput(1, 25);
-		m.processUserInput(2, 15);
-		
-		//3. Use assertions to verify correctness
-		BankAccount account = m.getAccount();
-		assertEquals(account.getCurrentBalance(), 10.0, 0.005);
-	}
 
+    private Menu m;
+
+    @Before
+    public void setUp() throws Exception {
+        m = new Menu();
+
+        // Simulate registering and logging in a test user
+        String username = "testuser";
+        String password = "password";
+        m.getAccounts().registerUser(username, password);
+        User testUser = m.getAccounts().login(username, password);
+        m.setCurrentUser(testUser);
+    }
+
+    @Test
+    public void testUserDeposit() {
+        m.processUserInput(1, 25);
+        BankAccount account = m.getCurrentUser().getAccount();
+        assertEquals(25.0, account.getCurrentBalance(), 0.005);
+    }
+
+    @Test
+    public void testUserWithdraw() {
+        m.processUserInput(1, 25); // deposit first
+        m.processUserInput(2, 15); // withdraw
+        BankAccount account = m.getCurrentUser().getAccount();
+        assertEquals(10.0, account.getCurrentBalance(), 0.005);
+    }
 }

@@ -83,6 +83,17 @@ public class User {
 	public String getPasswordHash() {
 		return this.passwordHash;
 	}
+	
+	/**
+	 * Verifies if the user is an administrator in the Bank
+	 * 
+	 * @param none
+	 * @return false if the user is not an administrator; for regular users it should return false
+	 * 
+	 * */
+    public boolean isAdmin() {
+        return false;
+    }
 
 	/**
 	 * Hashes a given password using SHA-512 and a provided salt.
