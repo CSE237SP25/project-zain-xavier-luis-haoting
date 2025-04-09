@@ -24,17 +24,30 @@ public class Menu {
 	
 	//methods that require user input (Scanner) don't need to be tested
 	public double getUserInput() {
-			return keyboardInput.nextDouble();
-		
+		while (!keyboardInput.hasNextDouble()) { 
+			System.out.println("Invalid input. Please enter a valid number.");
+			keyboardInput.next(); 
+		}
+		return keyboardInput.nextDouble(); 
 	}
 	
 	//Can and should test methods the process user input
 	public void processUserInput(double selection, double amount) {
 		if (selection == 1) {
-			userDeposit(amount);
+			if (amount <= 0) {
+				System.out.println("Deposit amount must be greater than zero.");
+			} else {
+				userDeposit(amount);
+			}
 		}
 		else if (selection == 2) {
-			userWithdraw(amount);
+			if (amount <= 0) {
+				System.out.println("Withdrawal amount must be greater than zero.");
+			} else if (amount > theAccount.getCurrentBalance()) {
+				System.out.println("Insufficient balance.");
+			} else {
+				userWithdraw(amount);
+			}
 		}
 		else if (selection == 3) {
 			System.out.println("Current Balance: $" + theAccount.getCurrentBalance());
@@ -62,22 +75,6 @@ public class Menu {
 	public BankAccount getAccount() {
 		return theAccount;
 	}
-	
-	public static void main(String[] args) {
-		Menu m = new Menu();
-		m.displayOptions();
-		double selection = m.getUserInput();
-		while (selection != 5) {
-			double amount = 0;
-            if (selection == 1 || selection == 2) {System.out.println("Enter amount: ");
-			amount = m.getUserInput(); }
-			m.processUserInput(selection, amount);
-			m.displayOptions();
-			selection = m.getUserInput();
-		}
-        System.out.println("Exiting...");
-        m.close();  
-    }
 
     public void close() {
         if (keyboardInput != null) {
