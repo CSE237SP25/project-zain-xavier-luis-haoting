@@ -1,20 +1,28 @@
 package bankapp;
 
 public class Main {
+    public static void main(String[] args) {
+        Menu menu = new Menu();
 
-public static void main(String[] args) {
-		Menu m = new Menu();
-		m.displayOptions();
-		double selection = m.getUserInput();
-		while (selection != 5) {
-			double amount = 0;
-            if (selection == 1 || selection == 2) {System.out.println("Enter amount: ");
-			amount = m.getUserInput(); }
-			m.processUserInput(selection, amount);
-			m.displayOptions();
-			selection = m.getUserInput();
-		}
-        System.out.println("Exiting...");
-        m.close();  
+        while (menu.handleLogin()) {
+            double selection;
+            do {
+                menu.displayOptions();
+                selection = menu.getUserInput();
+
+                double amount = 0;
+
+                if (selection == 1 || selection == 2) {
+                    System.out.print("Enter amount: ");
+                    amount = menu.getUserInput();
+                }
+
+                menu.processUserInput(selection, amount);
+
+            } while (menu.isLoggedIn());
+        }
+
+        System.out.println("Thanks for using ChaChing! Goodbye.");
+        menu.close();
     }
 }
