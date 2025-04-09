@@ -60,6 +60,44 @@ public class Bank implements Iterable<User>{
 	}
 
 	/**
+	 * Registers a new user with a user object.
+	 *
+	 * @param user the user object that contains the password and username in string
+	 * @return true if the user was successfully registered, false if the username
+	 *         is already taken.
+	 */
+	public boolean registerUser(User user) {
+		if(user == null) {
+			System.out.println("User provided cannot be null");
+			return false;
+		}
+		
+		String username = user.getUsername();
+		String password = user.getPasswordHash();
+
+		if(username == null || username.isEmpty()) {
+			System.out.println("Username should be provided");
+			return false;
+		}
+		if (password == null || password.isEmpty()) {
+			System.out.println("Password should be provided.");
+			return false;
+		}
+		if (users.containsKey(username)) {
+			System.out.println("User: " + username + " already exists in the database.");
+			return false;
+		}
+		try {
+			users.put(username, new User(username, password));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return false;
+		}
+		System.out.println("User: " + username + " successfully added.");
+		return true;
+	}
+
+	/**
 	 * Attempts to log in a user with the provided username and password.
 	 * 
 	 * @param username The username of the user.
