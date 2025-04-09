@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
  * Manages user accounts in the banking application. Provides functionality for
  * user registration and authentication.
  */
-public class Accounts {
+public class Bank {
 	/**
 	 * A map storing registered users, where the key is the username and the value
 	 * is the User object.
@@ -19,7 +19,7 @@ public class Accounts {
 	/**
 	 * Constructs an Accounts manager with an empty user database.
 	 */
-	public Accounts() {
+	public Bank() {
 		this.users = new HashMap<>();
 	}
 

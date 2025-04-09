@@ -11,33 +11,33 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bankapp.Accounts;
+import bankapp.Bank;
 import bankapp.User;
 
 /**
- * Unit tests for the {@link Accounts} class, which handles user registration and login.
+ * Unit tests for the {@link Bank} class, which handles user registration and login.
  * 
  * These tests cover the functionality of registering users, logging in with correct and incorrect credentials,
  * and handling edge cases like empty usernames or passwords.
  */
-public class AccountTests {
+public class BankTests {
 
-    private Accounts accounts;
+    private Bank accounts;
 
     /**
      * Setup method that runs before each test case.
-     * Creates a new {@link Accounts} object to ensure tests are isolated from each other.
+     * Creates a new {@link Bank} object to ensure tests are isolated from each other.
      */
     @BeforeEach
     void setup() {
         // Create a new Accounts object before each test to avoid state carry-over
-        accounts = new Accounts();
+        accounts = new Bank();
     }
 
     /**
      * Tests that a user can successfully register with a unique username and valid password.
      * 
-     * Verifies that the {@link Accounts#registerUser(String, String)} method correctly registers a new user.
+     * Verifies that the {@link Bank#registerUser(String, String)} method correctly registers a new user.
      */
     @Test
     public void testRegisterUserSuccess() {
@@ -49,7 +49,7 @@ public class AccountTests {
     /**
      * Tests that a user cannot register if the username already exists.
      * 
-     * Verifies that the {@link Accounts#registerUser(String, String)} method prevents duplicate registrations.
+     * Verifies that the {@link Bank#registerUser(String, String)} method prevents duplicate registrations.
      */
     @Test
     public void testRegisterUserFailureUsernameExists() {
@@ -64,7 +64,7 @@ public class AccountTests {
     /**
      * Tests that a user can log in successfully with the correct username and password.
      * 
-     * Verifies that the {@link Accounts#login(String, String)} method allows a user to log in with correct credentials.
+     * Verifies that the {@link Bank#login(String, String)} method allows a user to log in with correct credentials.
      */
     @Test
     public void testLoginSuccess() {
@@ -83,7 +83,7 @@ public class AccountTests {
     /**
      * Tests that a user cannot log in with an incorrect password.
      * 
-     * Verifies that the {@link Accounts#login(String, String)} method returns null when the password is incorrect.
+     * Verifies that the {@link Bank#login(String, String)} method returns null when the password is incorrect.
      */
     @Test
     public void testLoginFailureIncorrectPassword() {
@@ -104,7 +104,7 @@ public class AccountTests {
     /**
      * Tests that a user cannot log in if the username is not found in the system.
      * 
-     * Verifies that the {@link Accounts#login(String, String)} method returns null when the username is incorrect.
+     * Verifies that the {@link Bank#login(String, String)} method returns null when the username is incorrect.
      */
     @Test
     public void testLoginFailureUsernameNotFound() {
@@ -122,7 +122,7 @@ public class AccountTests {
     /**
      * Tests that a user cannot register if the username is empty.
      * 
-     * Verifies that the {@link Accounts#registerUser(String, String)} method prevents registration with an empty username.
+     * Verifies that the {@link Bank#registerUser(String, String)} method prevents registration with an empty username.
      */
     @Test
     public void testRegisterEmptyUsername() {
@@ -134,7 +134,7 @@ public class AccountTests {
     /**
      * Tests that a user cannot register if the password is empty.
      * 
-     * Verifies that the {@link Accounts#registerUser(String, String)} method prevents registration with an empty password.
+     * Verifies that the {@link Bank#registerUser(String, String)} method prevents registration with an empty password.
      */
     @Test
     public void testRegisterEmptyPassword() {
