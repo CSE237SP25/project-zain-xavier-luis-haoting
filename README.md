@@ -25,6 +25,21 @@ Is there anything that you implemented but doesn't currently work?
 * Code exists for creating new accounts and logging into existing accounts, but this is not yet included in the menu
 * Menu currently has a sanitization issue; any non-numerical inputs result in an input mismatch error
 
+# Iteration 2
+What user stories were completed this iteration?
+* Bank customer can create new account
+* Bank Customer can login to existing account
+* Bank customer can review only their transaction history
+* Admins are able to login to a special admin account
+  
+What user stories do you intend to complete next iteration?
+* Bank customers are able to transfer money between accounts
+* Bank customers are able to specify a savings/checking account when creating new account
+
+Is there anything that you implemented but doesn't currently work?
+* Admin accounts have to be created within the codebase before you can access them in the menu, because the admin account creation is different from a regular account
+
+# Running Script
 What commands are needed to compile and run your code from the command line (please provide a script that users can run to launch your program)?
 
 * Navigate to the root of the repo, then run: 
