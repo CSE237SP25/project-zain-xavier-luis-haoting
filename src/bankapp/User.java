@@ -25,6 +25,7 @@ public class User {
 	/**
 	 * Constructs a new user with a username and password. The password is securely
 	 * hashed using SHA-512 with a generated salt.
+	 * By default it constructs it using a checkings account.
 	 *
 	 * @param username The username of the user.
 	 * @param password The raw password to be hashed.
@@ -34,8 +35,34 @@ public class User {
 		this.username = username;
 		this.hashSalt = generateSalt();
 		this.passwordHash = hashPassword(password, hashSalt);
-		this.account = new BankAccount();
+		this.account = new CheckingsAccount();
 	}
+	
+	/**
+	 * Constructs a new user with a username and password.
+	 * The password is securely hashed using SHA-512 with a 
+	 * generated salt.
+	 * In addition, if specified savings account, it creates a 
+	 * savings account. Otherwise, it creates the account with a
+	 * checkings account. 
+	 * 
+	 * @param username The username of the user.
+	 * @param password The raw password to be hashed.
+	 * @param isSavingsAccount The flag indicating if user wants to create account with savings account.
+	 * @throws NoSuchAlgorithmException If SHA-512 algorithm is not available.
+	 * 
+	 * */
+	public User(String username, String password, Boolean isSavingsAccount) throws NoSuchAlgorithmException {
+		this.username = username;
+		this.hashSalt = generateSalt();
+		this.passwordHash = hashPassword(password, hashSalt);
+		if(isSavingsAccount) {
+			this.account = new SavingsAccount();
+			return;
+		}
+		this.account = new CheckingsAccount();
+	}
+	
 
 	/**
 	 * Verifies if the given password matches the stored hashed password.
