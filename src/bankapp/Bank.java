@@ -115,6 +115,57 @@ public class Bank implements Iterable<User>{
 		}
 		return user;
 	}
+	
+	/**
+	 * Transfers funds from one user to another, if possible.
+	 *
+	 * @param fromUsername the username of the sender
+	 * @param toUsername the username of the recipient
+	 * @param amount the amount to transfer
+	 * @return true if the transfer was successful, false otherwise
+	 */
+	public boolean transferFunds(String fromUsername, String toUsername, double amount) {
+	    if (fromUsername == null || toUsername == null || amount <= 0) {
+	        System.out.println("Invalid transfer parameters.");
+	        return false;
+	    }
+
+	    if(fromUsername.isEmpty() || toUsername.isEmpty()) {
+	    	System.out.println("Usernames provided for transfer cannot be empty.");
+	    }
+
+	    User sender = users.get(fromUsername);
+	    User recipient = users.get(toUsername);
+
+	    if (sender == null || recipient == null) {
+	        System.out.println("Sender or recipient does not exist.");
+	        return false;
+	    }
+
+	    BankAccount senderAccount = sender.getAccount();
+	    BankAccount recipientAccount = recipient.getAccount();
+
+	    if (senderAccount == null || recipientAccount == null) {
+	        System.out.println("Sender or recipient does not have a valid account.");
+	        return false;
+	    }
+
+	    // Check for sufficient funds
+	    if(senderAccount.getCurrentBalance() <= amount) {
+	    	System.out.println("Sender does not have sufficient funds to transfer specified amount.");
+	    	return false;
+	    }
+	    
+	    // Mimic the action of the bank retrieving the money from the sender
+	    senderAccount.withdraw(amount);
+
+	    // Deposit to recipient's account
+	    recipientAccount.deposit(amount);
+
+	    System.out.printf("Transferred $%.2f from %s to %s\n", amount, fromUsername, toUsername);
+	    return true;
+	}
+
 
 	/**
 	 * Provides an iterator for the Bank class in which it iterates through each user in the hashmap.
