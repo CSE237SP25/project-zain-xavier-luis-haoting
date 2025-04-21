@@ -73,4 +73,26 @@ public class BankAccountTests {
 			assertTrue(e != null);
 		}
 	}
+	
+	@Test
+	public void testUniqueAccountIdGeneration() {
+	    // 1. Create two accounts
+	    BankAccount account1 = new BankAccount();
+	    BankAccount account2 = new BankAccount();
+
+	    // 2. Assert UUIDs are different
+	    assertTrue(!account1.getId().equals(account2.getId()));
+	}
+
+	/**
+	 * Tests that setting and retrieving the nickname of a BankAccount works correctly.
+	 */
+	@Test
+	public void testNicknameAssignment() {
+	    BankAccount account = new BankAccount();
+	    account.setNickname("My Main Account");
+
+	    assertEquals("My Main Account", account.getNickname());
+	}
+
 }

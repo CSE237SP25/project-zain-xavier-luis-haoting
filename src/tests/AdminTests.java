@@ -137,8 +137,8 @@ public class AdminTests {
     		fail("Bank Login failed which should have happened...");
     	}
 
-		theNormalUser.getAccount().deposit(100); // Add a deposit transaction
-		theNormalUser.getAccount().withdraw(30); // Add a withdrawal transaction
+		theNormalUser.getCurrentAccount().deposit(100); // Add a deposit transaction
+		theNormalUser.getCurrentAccount().withdraw(30); // Add a withdrawal transaction
 
         // Admin tries to get all transactions
         List<Transaction> transactions = admin.getAllTransactions(bank);
