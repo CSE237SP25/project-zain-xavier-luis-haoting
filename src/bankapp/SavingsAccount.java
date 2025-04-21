@@ -20,6 +20,19 @@ public class SavingsAccount extends BankAccount {
         this.withdrawalLimit = 3;
         this.interestRate = 0.01; // 1% interest
     }
+    
+    /**
+     * Constructs a new SavingsAccount with the a zero balance,
+     * a withdrawal limit of 3 per month, and the
+     * option to customize the interest rate.
+     * @param interestRate
+     * */
+    public SavingsAccount(double interestRate) {
+    	super();
+    	this.withdrawalCount = 0;
+    	this.withdrawalLimit = 3;
+    	this.interestRate = interestRate;
+    }
 
     /**
      * Withdraws a specified amount from the savings account, enforcing
