@@ -21,6 +21,9 @@ public class BankAccount {
 
     /** Transaction log for recording deposits and withdrawals. */
     private Log transactionLog;
+    
+    /** Log to track failed withdrawal attempts */
+    private Log failedTransactionLog;
 
     /**
      * Constructs a new BankAccount with a unique ID, a zero balance,
@@ -29,6 +32,7 @@ public class BankAccount {
     public BankAccount() {
         this.id = UUID.randomUUID();
         this.transactionLog = new Log();
+        this.failedTransactionLog = new Log();
         this.balance = 0;
     }
 
@@ -105,6 +109,7 @@ public class BankAccount {
         }
         if (this.balance < amount) {
             System.out.println("Insufficient funds.");
+            failedTransactionLog.addTransaction("Failed Withdrawal", amount); 
             throw new IllegalArgumentException("Insufficient funds.");
         }
         this.balance -= amount;
@@ -119,6 +124,11 @@ public class BankAccount {
     public List<Transaction> getTransactionLog() {
         return this.transactionLog.getTransactions();
     }
+    
+    public List<Transaction> getFailedTransactionLog() {
+        return this.failedTransactionLog.getTransactions();
+    }
+
 
     /**
      * Prints all transactions associated with this account to the console.
@@ -126,4 +136,9 @@ public class BankAccount {
     public void printTransactions() {
         transactionLog.printTransactions();
     }
+    
+    public void printFailedTransactions() {
+        failedTransactionLog.printTransactions();
+    }
+
 }

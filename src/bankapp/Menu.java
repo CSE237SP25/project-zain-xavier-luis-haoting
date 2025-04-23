@@ -71,7 +71,8 @@ public class Menu {
         System.out.println("2. Withdraw");
         System.out.println("3. Check current balance");
         System.out.println("4. Review transaction log");
-        System.out.println("5. Logout");
+        System.out.println("5. Check failed withdrawal log");  
+        System.out.println("6. Logout");
     }
 
     public double getUserInput() {
@@ -100,6 +101,9 @@ public class Menu {
                 System.out.println("\nWithdrawal amount must be greater than zero.\n");
             } else if (amount > theAccount.getCurrentBalance()) {
                 System.out.println("\nInsufficient balance.\n");
+                try {
+                    theAccount.withdraw(amount); // This will throw and log the failed transaction
+                } catch (IllegalArgumentException ignored) {} // We already show a message above
             } else {
                 theAccount.withdraw(amount);
                 System.out.println("\nWithdrew $" + amount);
@@ -112,6 +116,10 @@ public class Menu {
             theAccount.printTransactions();
             System.out.println();
         } else if (selection == 5) {
+            System.out.println();
+            theAccount.printFailedTransactions();  // Print failed transactions
+            System.out.println();
+        } else if (selection == 6) {
             System.out.println("\nLogging out...\n");
             currentUser = null; // trigger re-login
             return false;
