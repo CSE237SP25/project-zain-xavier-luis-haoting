@@ -42,11 +42,12 @@ Is there anything that you implemented but doesn't currently work?
 # Iteration 3
 What user stories were completed this iteration?
 * Bank customer is intantly logged in to registered account
-* Bank Customer can review failed withdrawals in a new failed transaction log
-* Bank customer can transfer funds to another account
+* Bank customer can review failed withdrawals in a new failed transaction log
+* Admins can log in from the menu and access all admin features
+* Bank customer can open several accounts and can differentiate between savings and checking account on creation
 
 Is there anything that you implemented but doesn't currently work?
-* Admin accounts have to be created within the codebase before you can access them in the menu, because the admin account creation is different from a regular account
+* Bank customer can transfer funds to another account --> needs to be put into user interface
 
 # Running Script
 What commands are needed to compile and run your code from the command line (please provide a script that users can run to launch your program)?
