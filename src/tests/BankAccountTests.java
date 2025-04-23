@@ -94,5 +94,20 @@ public class BankAccountTests {
 
 	    assertEquals("My Main Account", account.getNickname());
 	}
+	
+	@Test
+	public void testFailedWithdrawalIsLogged() {
+	    BankAccount account = new BankAccount();
+
+	    try {
+	        account.withdraw(100); // No balance, should fail
+	        fail(); // Should not reach here
+	    } catch (IllegalArgumentException e) {
+	        // Expected, now check if the failed transaction was logged
+	        assertEquals(1, account.getFailedTransactionLog().size());
+	        assertEquals("Failed Withdrawal", account.getFailedTransactionLog().get(0).getType());
+	        assertEquals(100.0, account.getFailedTransactionLog().get(0).getAmount(), 0.005);
+	    }
+	}
 
 }
