@@ -48,6 +48,7 @@ What user stories were completed this iteration?
 
 Is there anything that you implemented but doesn't currently work?
 * Bank customer can transfer funds to another account --> needs to be put into user interface
+* The savings account has internal functionality, but the UI doesn't show any changes and the monthly cycle to accrue interest and reset maximum withdrawals doesn't actually run
 
 # Running Script
 What commands are needed to compile and run your code from the command line (please provide a script that users can run to launch your program)?
