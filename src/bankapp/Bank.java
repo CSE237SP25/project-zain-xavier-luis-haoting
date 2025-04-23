@@ -142,8 +142,8 @@ public class Bank implements Iterable<User>{
 	        return false;
 	    }
 
-	    BankAccount senderAccount = sender.getAccount();
-	    BankAccount recipientAccount = recipient.getAccount();
+	    BankAccount senderAccount = sender.getCurrentAccount();
+	    BankAccount recipientAccount = recipient.getCurrentAccount();
 
 	    if (senderAccount == null || recipientAccount == null) {
 	        System.out.println("Sender or recipient does not have a valid account.");

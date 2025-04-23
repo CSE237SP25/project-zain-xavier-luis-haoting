@@ -157,13 +157,13 @@ public class BankTests {
         User alice = accounts.login("alice", "pass1");
         User bob = accounts.login("bob", "pass2");
 
-        alice.getAccount().deposit(200.00);
+        alice.getCurrentAccount().deposit(200.00);
 
         boolean result = accounts.transferFunds("alice", "bob", 50.00);
 
         assertTrue("Transfer should succeed with valid users and sufficient balance.", result);
-        assertEquals(150.00, alice.getAccount().getCurrentBalance(), 0.01);
-        assertEquals(50.00, bob.getAccount().getCurrentBalance(), 0.01);
+        assertEquals(150.00, alice.getCurrentAccount().getCurrentBalance(), 0.01);
+        assertEquals(50.00, bob.getCurrentAccount().getCurrentBalance(), 0.01);
     }
     
     /**
@@ -177,7 +177,7 @@ public class BankTests {
         User alice = accounts.login("alice", "pass1");
         User bob = accounts.login("bob", "pass2");
 
-        alice.getAccount().deposit(20.00);
+        alice.getCurrentAccount().deposit(20.00);
 
         boolean result = accounts.transferFunds("alice", "bob", 50.00);
         assertFalse("Transfer should fail due to insufficient funds.", result);
@@ -238,7 +238,7 @@ public class BankTests {
         accounts.registerUser("bob", "pass2");
 
         User alice = accounts.login("alice", "pass1");
-        alice.getAccount().deposit(100.00);
+        alice.getCurrentAccount().deposit(100.00);
 
         boolean result1 = accounts.transferFunds("alice", "bob", -10.0);
         boolean result2 = accounts.transferFunds("alice", "bob", 0.0);
