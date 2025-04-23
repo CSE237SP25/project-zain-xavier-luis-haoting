@@ -2,14 +2,18 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bankapp.BankAccount;
 import bankapp.User;
 
 /**
@@ -115,4 +119,56 @@ public class UserTests {
 			fail("Should not have a NoSuchAlgorithmException occur.");
 		}
 	}
+	
+    /**
+     * Tests that a new user has one default account.
+     */
+    @Test
+    public void testDefaultAccountExists() {
+        assertEquals(1, user.getAllAccounts().size());
+        assertNotNull(user.getCurrentAccount());
+    }
+
+    /**
+     * Tests adding and switching to a new account by UUID.
+     */
+    @Test
+    public void testAddAndSwitchAccount() {
+        BankAccount newAccount = new BankAccount();
+        UUID newId = newAccount.getId();
+
+        user.addAccount(newAccount);
+        user.switchToAccount(newId);
+
+        assertEquals(newId, user.getCurrentAccount().getId());
+    }
+
+    /**
+     * Tests that removing the current account switches to another if available.
+     */
+    @Test
+    public void testRemoveCurrentAccount() {
+        BankAccount another = new BankAccount();
+        user.addAccount(another);
+        UUID currentId = user.getCurrentAccount().getId();
+
+        user.removeAccount(currentId);
+        assertNotNull(user.getCurrentAccount());
+        assertNotEquals(currentId, user.getCurrentAccount().getId());
+    }
+
+    /**
+     * Tests that switching to a non-existent account throws an exception.
+     */
+    @Test
+    public void testInvalidSwitchAccount() {
+        UUID fakeId = UUID.randomUUID();
+        try {
+        	user.switchToAccount(fakeId);
+        	fail("An exception indicating the account ID was not found should have been thrown.");
+        }
+        catch(IllegalArgumentException exception){
+        	System.out.println("Successfully prevented switching to an account that does not exist for a user.");
+        }
+    }
 }

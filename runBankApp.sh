@@ -4,7 +4,7 @@
 PROJECT_DIR="./src"
 # Define the package and class name
 PACKAGE="bankapp"
-MAIN_CLASS="Menu"
+MAIN_CLASS="Main"
 
 # Navigate to the source code directory
 cd $PROJECT_DIR

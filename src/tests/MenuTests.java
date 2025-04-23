@@ -28,7 +28,7 @@ public class MenuTests {
     @Test
     public void testUserDeposit() {
         m.processUserInput(1, 25);
-        BankAccount account = m.getCurrentUser().getAccount();
+        BankAccount account = m.getCurrentUser().getCurrentAccount();
         assertEquals(25.0, account.getCurrentBalance(), 0.005);
     }
 
@@ -36,7 +36,7 @@ public class MenuTests {
     public void testUserWithdraw() {
         m.processUserInput(1, 25); // deposit first
         m.processUserInput(2, 15); // withdraw
-        BankAccount account = m.getCurrentUser().getAccount();
+        BankAccount account = m.getCurrentUser().getCurrentAccount();
         assertEquals(10.0, account.getCurrentBalance(), 0.005);
     }
 }

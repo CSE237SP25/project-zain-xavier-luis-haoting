@@ -84,7 +84,7 @@ public class Menu {
     }
 
     public boolean processUserInput(double selection, double amount) {
-        BankAccount theAccount = currentUser.getAccount();
+        BankAccount theAccount = currentUser.getCurrentAccount();
 
         if (selection == 1) {
             if (amount <= 0) {
