@@ -53,4 +53,14 @@ public class LogTests {
 	    
 	    assertEquals(0, log.getTransactions().size());
 	}
+	
+	@Test
+	public void testAddFailedWithdrawalTransaction() {
+	    Log failedLog = new Log();
+	    failedLog.addTransaction("Failed Withdrawal", 20.0);
+	    
+	    assertEquals(1, failedLog.getTransactions().size());
+	    assertEquals("Failed Withdrawal", failedLog.getTransactions().get(0).getType());
+	    assertEquals(20.0, failedLog.getTransactions().get(0).getAmount(), 0.005);
+	}
 }

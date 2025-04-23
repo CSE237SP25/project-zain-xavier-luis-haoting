@@ -55,7 +55,7 @@ public class Bank implements Iterable<User>{
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("User: " + username + " successfully added.");
+		System.out.println("User: " + username + " successfully added and logged in.");
 		return true;
 	}
 
@@ -87,12 +87,7 @@ public class Bank implements Iterable<User>{
 			System.out.println("User: " + username + " already exists in the database.");
 			return false;
 		}
-		try {
-			users.put(username, new User(username, password));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return false;
-		}
+		users.put(username, user);
 		System.out.println("User: " + username + " successfully added.");
 		return true;
 	}
@@ -115,6 +110,62 @@ public class Bank implements Iterable<User>{
 		}
 		return user;
 	}
+	
+	public User getUser(String username) {
+	    return users.get(username);
+	}
+
+	
+	/**
+	 * Transfers funds from one user to another, if possible.
+	 *
+	 * @param fromUsername the username of the sender
+	 * @param toUsername the username of the recipient
+	 * @param amount the amount to transfer
+	 * @return true if the transfer was successful, false otherwise
+	 */
+	public boolean transferFunds(String fromUsername, String toUsername, double amount) {
+	    if (fromUsername == null || toUsername == null || amount <= 0) {
+	        System.out.println("Invalid transfer parameters.");
+	        return false;
+	    }
+
+	    if(fromUsername.isEmpty() || toUsername.isEmpty()) {
+	    	System.out.println("Usernames provided for transfer cannot be empty.");
+	    }
+
+	    User sender = users.get(fromUsername);
+	    User recipient = users.get(toUsername);
+
+	    if (sender == null || recipient == null) {
+	        System.out.println("Sender or recipient does not exist.");
+	        return false;
+	    }
+
+	    BankAccount senderAccount = sender.getCurrentAccount();
+	    BankAccount recipientAccount = recipient.getCurrentAccount();
+
+	    if (senderAccount == null || recipientAccount == null) {
+	        System.out.println("Sender or recipient does not have a valid account.");
+	        return false;
+	    }
+
+	    // Check for sufficient funds
+	    if(senderAccount.getCurrentBalance() <= amount) {
+	    	System.out.println("Sender does not have sufficient funds to transfer specified amount.");
+	    	return false;
+	    }
+	    
+	    // Mimic the action of the bank retrieving the money from the sender
+	    senderAccount.withdraw(amount);
+
+	    // Deposit to recipient's account
+	    recipientAccount.deposit(amount);
+
+	    System.out.printf("Transferred $%.2f from %s to %s\n", amount, fromUsername, toUsername);
+	    return true;
+	}
+
 
 	/**
 	 * Provides an iterator for the Bank class in which it iterates through each user in the hashmap.
@@ -139,6 +190,42 @@ public class Bank implements Iterable<User>{
 	        return new ArrayList<>(users.values());
 	    }
 	    return null;
+	}
+	
+	/**
+	 * Provides the entire balance for all accounts (independent of checkings and savings) 
+	 * summed up together for a specified user.
+	 * 
+	 * @param user the user that is being requested to get the accumulated sum of all the balances 
+	 * @return the total amount of all the balances for the user combined
+	 * */
+	private double getBalanceAcrossAllAccountsForUser(User user) {
+		double totalBalanceForAllAccounts = 0;
+		for(BankAccount bankAccount : user.getAllAccounts()) {
+			totalBalanceForAllAccounts += bankAccount.getCurrentBalance();
+		}
+		return totalBalanceForAllAccounts;
+	}
+	
+	/**
+	 * Provides to an admin the total amount of money the bank has from all users and their accounts combined.
+	 * Otherwise it treats it as an invalid access if the request did not
+	 * come from an admin.
+	 * 
+	 * @param user the user requesting the sum balance of the entire bank
+	 * @return the sum balance of the entire bank
+	 * @throws IllegalAccessException
+	 * */
+	public double calculateTotalSystemBalanceBasedOnAllUsers(User user) throws IllegalAccessException {
+		double total = 0.00;
+		if(user.isAdmin()) {
+			for(User userAccount: this) {
+				total += this.getBalanceAcrossAllAccountsForUser(userAccount);
+			}
+			return total;
+		}
+		
+		throw new IllegalAccessException();
 	}
 
 }

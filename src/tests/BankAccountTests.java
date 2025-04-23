@@ -73,4 +73,41 @@ public class BankAccountTests {
 			assertTrue(e != null);
 		}
 	}
+	
+	@Test
+	public void testUniqueAccountIdGeneration() {
+	    // 1. Create two accounts
+	    BankAccount account1 = new BankAccount();
+	    BankAccount account2 = new BankAccount();
+
+	    // 2. Assert UUIDs are different
+	    assertTrue(!account1.getId().equals(account2.getId()));
+	}
+
+	/**
+	 * Tests that setting and retrieving the nickname of a BankAccount works correctly.
+	 */
+	@Test
+	public void testNicknameAssignment() {
+	    BankAccount account = new BankAccount();
+	    account.setNickname("My Main Account");
+
+	    assertEquals("My Main Account", account.getNickname());
+	}
+	
+	@Test
+	public void testFailedWithdrawalIsLogged() {
+	    BankAccount account = new BankAccount();
+
+	    try {
+	        account.withdraw(100); // No balance, should fail
+	        fail(); // Should not reach here
+	    } catch (IllegalArgumentException e) {
+	        // Expected, now check if the failed transaction was logged
+	        assertEquals(1, account.getFailedTransactionLog().size());
+	        assertEquals("Failed Withdrawal", account.getFailedTransactionLog().get(0).getType());
+	        assertEquals(100.0, account.getFailedTransactionLog().get(0).getAmount(), 0.005);
+	    }
+	}
+
 }

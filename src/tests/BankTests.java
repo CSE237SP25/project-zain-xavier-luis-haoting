@@ -147,6 +147,108 @@ public class BankTests {
     }
     
     /**
+     * Tests that transferring funds between two users with valid accounts succeeds.
+     */
+    @Test
+    public void testTransferFundsSuccess() throws NoSuchAlgorithmException {
+        accounts.registerUser("alice", "pass1");
+        accounts.registerUser("bob", "pass2");
+
+        User alice = accounts.login("alice", "pass1");
+        User bob = accounts.login("bob", "pass2");
+
+        alice.getCurrentAccount().deposit(200.00);
+
+        boolean result = accounts.transferFunds("alice", "bob", 50.00);
+
+        assertTrue("Transfer should succeed with valid users and sufficient balance.", result);
+        assertEquals(150.00, alice.getCurrentAccount().getCurrentBalance(), 0.01);
+        assertEquals(50.00, bob.getCurrentAccount().getCurrentBalance(), 0.01);
+    }
+    
+    /**
+     * Tests that a transfer fails when the sender has insufficient funds.
+     */
+    @Test
+    public void testTransferFundsInsufficientBalance() throws NoSuchAlgorithmException {
+        accounts.registerUser("alice", "pass1");
+        accounts.registerUser("bob", "pass2");
+
+        User alice = accounts.login("alice", "pass1");
+        User bob = accounts.login("bob", "pass2");
+
+        alice.getCurrentAccount().deposit(20.00);
+
+        boolean result = accounts.transferFunds("alice", "bob", 50.00);
+        assertFalse("Transfer should fail due to insufficient funds.", result);
+    }
+    
+    /**
+     * Tests that a transfer fails when one or both users don't exist.
+     */
+    @Test
+    public void testTransferFundsInvalidUsers() {
+        accounts.registerUser("alice", "pass1");
+
+        boolean result = accounts.transferFunds("alice", "nonexistent", 10.0);
+        assertFalse("Transfer should fail when recipient does not exist.", result);
+
+        result = accounts.transferFunds("nonexistent", "alice", 10.0);
+        assertFalse("Transfer should fail when sender does not exist.", result);
+    }
+    
+    /**
+     * Tests that transferring with a null sender or recipient returns false.
+     */
+    @Test
+    public void testTransferFundsNullUsernames() {
+        accounts.registerUser("alice", "pass1");
+
+        boolean result1 = accounts.transferFunds(null, "alice", 10.0);
+        boolean result2 = accounts.transferFunds("alice", null, 10.0);
+        boolean result3 = accounts.transferFunds(null, null, 10.0);
+
+        assertFalse("Transfer should fail when sender is null.", result1);
+        assertFalse("Transfer should fail when recipient is null.", result2);
+        assertFalse("Transfer should fail when both are null.", result3);
+    }
+
+    /**
+     * Tests that transferring with empty string usernames returns false.
+     */
+    @Test
+    public void testTransferFundsEmptyUsernames() {
+        accounts.registerUser("alice", "pass1");
+
+        boolean result1 = accounts.transferFunds("", "alice", 10.0);
+        boolean result2 = accounts.transferFunds("alice", "", 10.0);
+        boolean result3 = accounts.transferFunds("", "", 10.0);
+
+        assertFalse("Transfer should fail when sender is empty string.", result1);
+        assertFalse("Transfer should fail when recipient is empty string.", result2);
+        assertFalse("Transfer should fail when both are empty strings.", result3);
+    }
+
+    /**
+     * Tests that transferring a negative or zero amount returns false.
+     */
+    @Test
+    public void testTransferFundsNegativeOrZeroAmount() throws NoSuchAlgorithmException {
+        accounts.registerUser("alice", "pass1");
+        accounts.registerUser("bob", "pass2");
+
+        User alice = accounts.login("alice", "pass1");
+        alice.getCurrentAccount().deposit(100.00);
+
+        boolean result1 = accounts.transferFunds("alice", "bob", -10.0);
+        boolean result2 = accounts.transferFunds("alice", "bob", 0.0);
+
+        assertFalse("Transfer should fail for negative amount.", result1);
+        assertFalse("Transfer should fail for zero amount.", result2);
+    }
+
+    
+    /**
      * Tests that the {@link Bank} class correctly implements {@link Iterable} and allows iteration over users.
      * 
      * Verifies that all registered users are returned when iterating over the Bank.

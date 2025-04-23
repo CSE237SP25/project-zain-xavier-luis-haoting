@@ -78,7 +78,7 @@ public class Admin extends User {
 
         if (bank != null) {
             for (User user : bank) {
-                BankAccount account = user.getAccount();
+                BankAccount account = user.getCurrentAccount();
                 System.out.println("The current user in getAllTransactions is: " + account.toString());
                 if (account != null) {
                 	System.out.println("The TransactionLog is: " + account.getTransactionLog());
