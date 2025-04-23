@@ -55,7 +55,7 @@ public class Bank implements Iterable<User>{
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("User: " + username + " successfully added.");
+		System.out.println("User: " + username + " successfully added and logged in.");
 		return true;
 	}
 
@@ -115,6 +115,11 @@ public class Bank implements Iterable<User>{
 		}
 		return user;
 	}
+	
+	public User getUser(String username) {
+	    return users.get(username);
+	}
+
 	
 	/**
 	 * Transfers funds from one user to another, if possible.

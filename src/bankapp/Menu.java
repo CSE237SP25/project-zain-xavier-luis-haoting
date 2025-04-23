@@ -45,6 +45,7 @@ public class Menu {
         String password = keyboardInput.nextLine();
 
         accounts.registerUser(username, password);
+        this.currentUser = accounts.getUser(username);
         System.out.println();
     }
 
@@ -143,20 +144,5 @@ public class Menu {
         this.currentUser = user;
     }
 }
-
-//	public void userDeposit(double amount) {
-//		theAccount.deposit(amount);
-//		System.out.println("Deposited $" + amount);
-//		System.out.println("Current Balance: $" + theAccount.getCurrentBalance());
-//	}
-//	public void userWithdraw(double amount) {
-//		theAccount.withdraw(amount);
-//		System.out.println("Withdrew $" + amount);
-//		System.out.println("Current Balance: $" + theAccount.getCurrentBalance());	
-//		}
-//	
-//	public BankAccount getAccount() {
-//		return theAccount;
-//	}
 
     
