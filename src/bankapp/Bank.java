@@ -87,12 +87,7 @@ public class Bank implements Iterable<User>{
 			System.out.println("User: " + username + " already exists in the database.");
 			return false;
 		}
-		try {
-			users.put(username, new User(username, password));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return false;
-		}
+		users.put(username, user);
 		System.out.println("User: " + username + " successfully added.");
 		return true;
 	}
@@ -195,6 +190,42 @@ public class Bank implements Iterable<User>{
 	        return new ArrayList<>(users.values());
 	    }
 	    return null;
+	}
+	
+	/**
+	 * Provides the entire balance for all accounts (independent of checkings and savings) 
+	 * summed up together for a specified user.
+	 * 
+	 * @param user the user that is being requested to get the accumulated sum of all the balances 
+	 * @return the total amount of all the balances for the user combined
+	 * */
+	private double getBalanceAcrossAllAccountsForUser(User user) {
+		double totalBalanceForAllAccounts = 0;
+		for(BankAccount bankAccount : user.getAllAccounts()) {
+			totalBalanceForAllAccounts += bankAccount.getCurrentBalance();
+		}
+		return totalBalanceForAllAccounts;
+	}
+	
+	/**
+	 * Provides to an admin the total amount of money the bank has from all users and their accounts combined.
+	 * Otherwise it treats it as an invalid access if the request did not
+	 * come from an admin.
+	 * 
+	 * @param user the user requesting the sum balance of the entire bank
+	 * @return the sum balance of the entire bank
+	 * @throws IllegalAccessException
+	 * */
+	public double calculateTotalSystemBalanceBasedOnAllUsers(User user) throws IllegalAccessException {
+		double total = 0.00;
+		if(user.isAdmin()) {
+			for(User userAccount: this) {
+				total += this.getBalanceAcrossAllAccountsForUser(userAccount);
+			}
+			return total;
+		}
+		
+		throw new IllegalAccessException();
 	}
 
 }
