@@ -28,6 +28,7 @@ public class AdminTests {
     private User normalUser;
     private Admin admin;
     private Bank bank;
+    private String normalUserPassword = "securePassword123";
 
     /**
      * Setup method that runs before each test case.
@@ -38,7 +39,7 @@ public class AdminTests {
     void setup() {
         try {
             // Create a new user with a test username and password
-            normalUser = new User("john_doe", "securepassword123");
+            normalUser = new User("john_doe", normalUserPassword);
             // Create a new admin with a test username and password
             admin = new Admin("admin", "adminSecure234");
 
@@ -129,7 +130,7 @@ public class AdminTests {
     public void testAdminCanViewAllTransactions() {
     	User theNormalUser = null;
     	try {
-			theNormalUser = bank.login(normalUser.getUsername(), normalUser.getPasswordHash());
+			theNormalUser = bank.login(normalUser.getUsername(), normalUserPassword);
 		} catch (NoSuchAlgorithmException e) {
 			fail("Login failed due to NoSuchAlgorithmException.");
 		}

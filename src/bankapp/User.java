@@ -151,6 +151,13 @@ public class User {
     public String getPasswordHash() {
         return this.passwordHash;
     }
+    
+    /**
+     * Retrieves unhashed password of the user only if the admin requested it.
+     * 
+     * @returns password of current user if the requester is an admin
+     * @throws IllegalAccessException
+     * */
 
     /**
      * Verifies if the given password matches the stored hashed password.
