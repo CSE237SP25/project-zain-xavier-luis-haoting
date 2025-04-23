@@ -58,3 +58,5 @@ What commands are needed to compile and run your code from the command line (ple
 * chmod +x runBankApp.sh
 
 * ./runBankApp.sh
+
+* To access the admin account, select login and enter "owner" for the username and "verysecurePassword43" for the password
