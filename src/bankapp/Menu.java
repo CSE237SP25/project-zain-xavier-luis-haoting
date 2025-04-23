@@ -63,6 +63,7 @@ public class Menu {
                 default -> System.out.println("\nInvalid choice. Please try again.\n");
             }
         }
+        if (!currentUser.isAdmin()) {
         boolean selected = false;
 
         while (!selected) {
@@ -133,7 +134,9 @@ public class Menu {
                 default -> System.out.println("\nInvalid input. Please try again.");
             }
         }
+        }
         return currentUser;
+        
     }
 
 
