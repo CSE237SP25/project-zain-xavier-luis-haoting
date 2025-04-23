@@ -1,6 +1,7 @@
 package bankapp;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -62,10 +63,83 @@ public class Menu {
                 default -> System.out.println("\nInvalid choice. Please try again.\n");
             }
         }
+        if (!currentUser.isAdmin()) {
+        boolean selected = false;
 
-        System.out.println("\nWelcome, " + currentUser.getUsername() + "!\n");
+        while (!selected) {
+            System.out.println("\nWelcome, " + currentUser.getUsername() + "!\n");
+            System.out.println("Please choose an option:");
+            System.out.println("1. Access an existing account");
+            System.out.println("2. Create a new account");
+            System.out.println("3. Log out");
+
+            System.out.print("Enter choice: ");
+            int choice = getUserIntInput();
+
+            switch (choice) {
+                case 1 -> {
+                    List<BankAccount> accounts = currentUser.getAllAccounts();
+                    if (accounts.isEmpty()) {
+                        System.out.println("\nYou have no existing accounts.\n");
+                        break;
+                    }
+
+                    System.out.println("\nYour Accounts:");
+                    for (int i = 0; i < accounts.size(); i++) {
+                        BankAccount acc = accounts.get(i);
+                        System.out.printf("%d. %s (Balance: $%.2f)\n", i + 1, acc.getNickname(), acc.getCurrentBalance());
+                    }
+
+                    System.out.print("Select an account by number: ");
+                    int accIndex = getUserIntInput() - 1;
+
+                    if (accIndex >= 0 && accIndex < accounts.size()) {
+                        BankAccount selectedAcc = accounts.get(accIndex);
+                        currentUser.switchToAccount(selectedAcc.getId());
+                        System.out.println("\nUsing account: " + selectedAcc.getNickname() + "\n");
+                        selected = true;
+                    } else {
+                        System.out.println("\nInvalid account selection.\n");
+                    }
+                }
+                case 2 -> {
+                    System.out.println("\nSelect type of account to create:");
+                    System.out.println("1. Checkings");
+                    System.out.println("2. Savings");
+                    int accType = getUserIntInput();
+
+                    BankAccount newAcc;
+                    if (accType == 2) {
+                        newAcc = new SavingsAccount(); // assuming this class exists
+                    } else {
+                        newAcc = new CheckingsAccount(); // default fallback
+                    }
+
+                    System.out.print("Enter nickname for new account: ");
+                    String nickname = getUserStringInput();
+                    if (!nickname.isBlank()) {
+                        newAcc.setNickname(nickname);
+                    }
+
+                    currentUser.addAccount(newAcc);
+                    currentUser.switchToAccount(newAcc.getId());
+                    System.out.println("\nNew account created and selected: " + newAcc.getNickname() + "\n");
+                    selected = true;
+                }
+                case 3 -> {
+                    System.out.println("\nLogging out...");
+                    currentUser = null;
+                    return null; // or break out if your logic continues elsewhere
+                }
+                default -> System.out.println("\nInvalid input. Please try again.");
+            }
+        }
+        }
         return currentUser;
+        
     }
+
+
 
     /**
      * Handles the registration of a new user.
@@ -329,4 +403,22 @@ public class Menu {
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
+    
+    /**
+     * Prompts the user for integer input via the console and validates it.
+     * If the input is not a valid integer, the method will repeatedly prompt the user 
+     * until a valid integer is entered. 
+     *
+     * @return The valid integer input entered by the user.
+     */
+    public int getUserIntInput() {
+        while (!keyboardInput.hasNextInt()) {
+            System.out.println("\nInvalid input. Please enter a number.\n");
+            keyboardInput.nextLine(); // flush
+        }
+        int input = keyboardInput.nextInt();
+        keyboardInput.nextLine(); // clear newline
+        return input;
+    }
+
 }
